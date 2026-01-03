@@ -1,3 +1,4 @@
+using UnityEngine;
 public class CameraMovement : MonoBehaviour
 {
     [Header("Mouse Sensitivity")]
