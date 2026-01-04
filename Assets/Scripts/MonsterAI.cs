@@ -10,11 +10,12 @@ public class MonsterAI : MonoBehaviour
     [Header("Vision Settings")]
     [SerializeField] private float visionRange = 15f;
     [SerializeField] private float visionAngle = 60f;
+    [SerializeField] private float visionCheckRate = 10f;
     [SerializeField] private LayerMask obstacleMask;
     [SerializeField] private LayerMask playerMask;
     
     [Header("Chase Settings")]
-    [SerializeField] private float chaseSpeed = 5f;
+    [SerializeField] private float chaseSpeed = 6f;
     [SerializeField] private float patrolSpeed = 2f;
     [SerializeField] private float chaseTime = 5f;
     [SerializeField] private float losePlayerDistance = 20f;
@@ -27,9 +28,9 @@ public class MonsterAI : MonoBehaviour
     private Vector3 lastKnownPlayerPosition;
     private float chaseTimer;
     private bool canSeePlayer;
-    private bool isChasing;
     private float patrolTimer;
     private Vector3 patrolDestination;
+    private float visionCheckTimer;
     
     public enum MonsterState
     {
@@ -66,6 +67,8 @@ public class MonsterAI : MonoBehaviour
         }
         
         agent.speed = patrolSpeed;
+        agent.acceleration = 10f;
+        agent.angularSpeed = 200f;
         
         Invoke(nameof(InitializePatrol), 0.1f);
     }
@@ -86,7 +89,12 @@ public class MonsterAI : MonoBehaviour
     {
         if (player == null || agent == null || !agent.isOnNavMesh) return;
         
-        CheckVision();
+        visionCheckTimer += Time.deltaTime;
+        if (visionCheckTimer >= 1f / visionCheckRate)
+        {
+            CheckVision();
+            visionCheckTimer = 0f;
+        }
         
         switch (currentState)
         {
@@ -120,8 +128,19 @@ public class MonsterAI : MonoBehaviour
                 if (!Physics.Raycast(visionPoint.position, directionToPlayer, distanceToPlayer, obstacleMask))
                 {
                     canSeePlayer = true;
+                    OnPlayerSpotted();
                 }
             }
+        }
+    }
+    
+    void OnPlayerSpotted()
+    {
+        if (currentState != MonsterState.Chase)
+        {
+            currentState = MonsterState.Chase;
+            agent.speed = chaseSpeed;
+            chaseTimer = chaseTime;
         }
     }
     
@@ -129,9 +148,6 @@ public class MonsterAI : MonoBehaviour
     {
         if (canSeePlayer)
         {
-            currentState = MonsterState.Chase;
-            agent.speed = chaseSpeed;
-            chaseTimer = chaseTime;
             return;
         }
         
@@ -189,9 +205,6 @@ public class MonsterAI : MonoBehaviour
     {
         if (canSeePlayer)
         {
-            currentState = MonsterState.Chase;
-            agent.speed = chaseSpeed;
-            chaseTimer = chaseTime;
             return;
         }
         
