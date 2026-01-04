@@ -1,7 +1,11 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [Header("Stamina UI")]
+    public Slider staminaSlider;
+
     [Header("Movement Settings")]
     [SerializeField] private float walkSpeed = 3f;
     [SerializeField] private float crouchSpeed = 1.5f;
@@ -13,6 +17,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float staminaDrainRate = 20f;
     [SerializeField] private float staminaRegenRate = 15f;
     [SerializeField] private float staminaRegenDelay = 1f;
+    
     
     [Header("Crouch Settings")]
     [SerializeField] private float standingHeight = 2f;
@@ -59,6 +64,8 @@ public class PlayerMovement : MonoBehaviour
         currentStamina = maxStamina;
         controller.height = standingHeight;
         controller.center = new Vector3(0, standingHeight / 2, 0);
+        staminaSlider.maxValue = maxStamina;
+        staminaSlider.value = currentStamina;
         
         if (cameraHolder != null)
         {
@@ -76,6 +83,7 @@ public class PlayerMovement : MonoBehaviour
         HandleCrouch();
         HandleMovement();
         HandleStamina();
+        staminaSlider.value = currentStamina;
         
         if (Input.GetKeyDown(KeyCode.Escape))
         {
