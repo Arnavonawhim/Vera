@@ -20,8 +20,8 @@ public class PlayerMovement : MonoBehaviour
     
     
     [Header("Crouch Settings")]
-    [SerializeField] private float standingHeight = 2f;
-    [SerializeField] private float crouchHeight = 1f;
+    [SerializeField] private float standingHeight = 1f;
+    [SerializeField] private float crouchHeight = 0.5f;
     [SerializeField] private float crouchTransitionSpeed = 10f;
     [SerializeField] private Transform cameraHolder;
     [SerializeField] private float standingCameraHeight = 0.6f;
