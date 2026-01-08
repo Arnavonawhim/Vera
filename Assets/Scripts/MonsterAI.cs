@@ -3,6 +3,7 @@ using UnityEngine.AI;
 
 public class MonsterAI : MonoBehaviour
 {
+    [SerializeField] private Animator animator;
     [Header("References")]
     [SerializeField] private Transform player;
     [SerializeField] private Transform visionPoint;
@@ -108,7 +109,22 @@ public class MonsterAI : MonoBehaviour
                 HandleSearch();
                 break;
         }
+
+        UpdateAnimation();
     }
+
+    void UpdateAnimation()
+{
+    if (animator == null || agent == null) return;
+
+    // how fast agent is moving
+    float speed = agent.velocity.magnitude;
+
+    bool isMoving = speed > 0.1f; // small threshold to avoid jitter
+
+    animator.SetBool("isrunning", isMoving);
+}
+
     
     void CheckVision()
     {
