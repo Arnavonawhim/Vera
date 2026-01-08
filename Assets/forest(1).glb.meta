@@ -1,0 +1,27 @@
+fileFormatVersion: 2
+guid: 314e3469c8014b34090af204585e344d
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Bark.001
+    second: {fileID: 5877632353073955447, guid: 314e3469c8014b34090af204585e344d, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Leaves
+    second: {fileID: -4006148316881293267, guid: 314e3469c8014b34090af204585e344d, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Leaves.001
+    second: {fileID: -4395074831880243733, guid: 314e3469c8014b34090af204585e344d, type: 3}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: cc45016b844e7624dae3aec10fb443ea, type: 3}
+  reverseAxis: 0
+  renderPipeline: 2

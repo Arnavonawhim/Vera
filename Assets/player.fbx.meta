@@ -8,47 +8,47 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Wolf3D_Body
-    second: {fileID: -7831265160038725598, guid: 76841f65037a00f4a996f5c4902f686d, type: 3}
+    second: {fileID: -4051675383259424192, guid: 76841f65037a00f4a996f5c4902f686d, type: 3}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Wolf3D_Eye
-    second: {fileID: -3655324315213880867, guid: 76841f65037a00f4a996f5c4902f686d, type: 3}
+    second: {fileID: -6775877086325013610, guid: 76841f65037a00f4a996f5c4902f686d, type: 3}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Wolf3D_Glasses
-    second: {fileID: -7564463169690463307, guid: 76841f65037a00f4a996f5c4902f686d, type: 3}
+    second: {fileID: -7555648757851731127, guid: 76841f65037a00f4a996f5c4902f686d, type: 3}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Wolf3D_Hair
-    second: {fileID: -1016875900976486646, guid: 76841f65037a00f4a996f5c4902f686d, type: 3}
+    second: {fileID: 2544829687472157354, guid: 76841f65037a00f4a996f5c4902f686d, type: 3}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Wolf3D_Outfit_Bottom
-    second: {fileID: 423215404069992501, guid: 76841f65037a00f4a996f5c4902f686d, type: 3}
+    second: {fileID: -8991811377863496742, guid: 76841f65037a00f4a996f5c4902f686d, type: 3}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Wolf3D_Outfit_Footwear
-    second: {fileID: 276613572443664286, guid: 76841f65037a00f4a996f5c4902f686d, type: 3}
+    second: {fileID: 5572545136711353842, guid: 76841f65037a00f4a996f5c4902f686d, type: 3}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Wolf3D_Outfit_Top
-    second: {fileID: -8022088438238926171, guid: 76841f65037a00f4a996f5c4902f686d, type: 3}
+    second: {fileID: 4656876995300007172, guid: 76841f65037a00f4a996f5c4902f686d, type: 3}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Wolf3D_Skin
-    second: {fileID: -1756179739759820720, guid: 76841f65037a00f4a996f5c4902f686d, type: 3}
+    second: {fileID: -6423774539453355772, guid: 76841f65037a00f4a996f5c4902f686d, type: 3}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Wolf3D_Teeth
-    second: {fileID: -3373357099196759000, guid: 76841f65037a00f4a996f5c4902f686d, type: 3}
+    second: {fileID: 2986232281088083959, guid: 76841f65037a00f4a996f5c4902f686d, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -61,6 +61,8 @@ ModelImporter:
     optimizeGameObjects: 0
     removeConstantScaleCurves: 0
     motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
