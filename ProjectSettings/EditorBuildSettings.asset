@@ -14,5 +14,11 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Maze Scene.unity
     guid: 6b94f9520d2188e4cbecb15945d29a69
+  - enabled: 1
+    path: Assets/Scenes/GunScene.unity
+    guid: 3cc515e6ea8f9634b95cf57022ee6e57
+  - enabled: 1
+    path: Assets/Scenes/MonsterScene.unity
+    guid: ba5e5e118b189bf4c8c99e7e86f47ea6
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}

@@ -160,7 +160,7 @@ public class CodeEntryDoor : MonoBehaviour
     void LoadSceneByIndex()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(3);
     }
 
     void OnGUI()
