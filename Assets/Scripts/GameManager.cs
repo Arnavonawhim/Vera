@@ -9,7 +9,11 @@ public class GameManager : MonoBehaviour
     [Header("UI References")]
     [SerializeField] private GameObject gameOverPanel;
     [SerializeField] private Button restartButton;
+    [SerializeField] private Button mainMenuButton;
     [SerializeField] private Button quitButton;
+    
+    [Header("Scene Settings")]
+    [SerializeField] private string mainMenuSceneName = "MainMenu";
     
     [Header("Game State")]
     private bool isGameOver = false;
@@ -49,6 +53,12 @@ public class GameManager : MonoBehaviour
             restartButton.onClick.AddListener(RestartGame);
         }
         
+        if (mainMenuButton != null)
+        {
+            mainMenuButton.onClick.RemoveAllListeners();
+            mainMenuButton.onClick.AddListener(LoadMainMenu);
+        }
+        
         if (quitButton != null)
         {
             quitButton.onClick.RemoveAllListeners();
@@ -79,6 +89,13 @@ public class GameManager : MonoBehaviour
         Debug.Log("Restarting game...");
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+    
+    public void LoadMainMenu()
+    {
+        Debug.Log("Loading main menu...");
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(mainMenuSceneName);
     }
     
     public void QuitGame()

@@ -15,6 +15,9 @@ public class MonsterAI : MonoBehaviour
     [SerializeField] private LayerMask obstacleMask;
     [SerializeField] private LayerMask playerMask;
     
+    [Header("Alert Settings")]
+    [SerializeField] private float alertDuration = 10f;
+
     [Header("Chase Settings")]
     [SerializeField] private float chaseSpeed = 6f;
     [SerializeField] private float patrolSpeed = 2f;
@@ -32,6 +35,9 @@ public class MonsterAI : MonoBehaviour
     private float patrolTimer;
     private Vector3 patrolDestination;
     private float visionCheckTimer;
+    private bool isAlerted = false;
+    private Vector3 alertPosition;
+    private float alertTimer;
     
     public enum MonsterState
     {
@@ -90,6 +96,29 @@ public class MonsterAI : MonoBehaviour
     {
         if (player == null || agent == null || !agent.isOnNavMesh) return;
         
+        if (GameManager.Instance != null && GameManager.Instance.IsGameOver())
+        {
+            agent.isStopped = true;
+            return;
+        }
+        
+        if (isAlerted)
+        {
+            alertTimer -= Time.deltaTime;
+            
+            if (alertTimer <= 0)
+            {
+                isAlerted = false;
+            }
+            else
+            {
+                if (agent.enabled && agent.isOnNavMesh)
+                {
+                    agent.SetDestination(alertPosition);
+                }
+            }
+        }
+        
         visionCheckTimer += Time.deltaTime;
         if (visionCheckTimer >= 1f / visionCheckRate)
         {
@@ -109,8 +138,6 @@ public class MonsterAI : MonoBehaviour
                 HandleSearch();
                 break;
         }
-
-        UpdateAnimation();
     }
 
     void UpdateAnimation()
@@ -292,5 +319,22 @@ public class MonsterAI : MonoBehaviour
             Gizmos.color = Color.magenta;
             Gizmos.DrawWireSphere(lastKnownPlayerPosition, 1f);
         }
+    }
+
+    public void AlertMonster(Vector3 position)
+    {
+        isAlerted = true;
+        alertPosition = position;
+        alertTimer = alertDuration;
+        
+        currentState = MonsterState.Chase;
+        agent.speed = chaseSpeed;
+        
+        if (agent.enabled && agent.isOnNavMesh)
+        {
+            agent.SetDestination(alertPosition);
+        }
+        
+        Debug.Log("Monster alerted to position: " + position);
     }
 }
