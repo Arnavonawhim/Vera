@@ -138,8 +138,8 @@ public class CodeEntryDoor : MonoBehaviour
             {
                 monsterObject.SetActive(false);
             }
-            
-            Invoke(nameof(LoadNextScene), 1f);
+
+            Invoke(nameof(LoadSceneByIndex), 1f);
         }
         else
         {
@@ -150,13 +150,19 @@ public class CodeEntryDoor : MonoBehaviour
             }
         }
     }
+
     
     void LoadNextScene()
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene(nextSceneName);
     }
-    
+    void LoadSceneByIndex()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(0);
+    }
+
     void OnGUI()
     {
         if (playerInRange && !isCodePanelOpen)
