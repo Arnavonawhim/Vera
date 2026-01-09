@@ -11,6 +11,8 @@ public class CodeEntryDoor : MonoBehaviour
     [SerializeField] private GameObject codeEntryPanel;
     [SerializeField] private InputField codeInputField;
     [SerializeField] private Text feedbackText;
+    [SerializeField] private Button closeButton;
+    [SerializeField] private Button submitButton;
     
     [Header("Settings")]
     [SerializeField] private string playerTag = "Player";
@@ -37,6 +39,16 @@ public class CodeEntryDoor : MonoBehaviour
         {
             codeEntryPanel.SetActive(false);
         }
+        
+        if (closeButton != null)
+        {
+            closeButton.onClick.AddListener(CloseCodePanel);
+        }
+        
+        if (submitButton != null)
+        {
+            submitButton.onClick.AddListener(SubmitCode);
+        }
     }
     
     void Update()
@@ -55,18 +67,18 @@ public class CodeEntryDoor : MonoBehaviour
         {
             CloseCodePanel();
         }
+        
+        if (isCodePanelOpen && (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter)))
+        {
+            SubmitCode();
+        }
     }
     
     void OpenCodePanel()
     {
-        if (PaintingManager.Instance != null)
-        {
-            PaintingManager.Instance.RevealPaintingUI();
-        }
-        
         if (ObjectiveManager.Instance != null)
         {
-            ObjectiveManager.Instance.SetObjective("Count all paintings in the maze");
+            ObjectiveManager.Instance.SetObjective("Count The Paintings");
         }
         
         isCodePanelOpen = true;
@@ -84,11 +96,12 @@ public class CodeEntryDoor : MonoBehaviour
         {
             codeInputField.text = "";
             codeInputField.ActivateInputField();
+            codeInputField.Select();
         }
         
         if (feedbackText != null)
         {
-            feedbackText.text = "Enter the number of paintings in the maze";
+            feedbackText.text = "Enter the code to escape";
             feedbackText.color = Color.white;
         }
     }
@@ -109,72 +122,34 @@ public class CodeEntryDoor : MonoBehaviour
     
     public void SubmitCode()
     {
-        if (codeInputField == null || PaintingManager.Instance == null) return;
+        if (codeInputField == null) return;
         
         string enteredCode = codeInputField.text;
-        int correctCode = PaintingManager.Instance.GetTotalPaintings();
         
-        if (int.TryParse(enteredCode, out int code))
+        if (enteredCode == "11")
         {
-            if (code == correctCode)
+            if (feedbackText != null)
             {
-                if (PaintingManager.Instance.HasCountedAllPaintings())
-                {
-                    if (feedbackText != null)
-                    {
-                        feedbackText.text = "Correct! Escaping...";
-                        feedbackText.color = Color.green;
-                    }
-                    
-                    if (monsterObject != null)
-                    {
-                        monsterObject.SetActive(false);
-                    }
-                    
-                    Invoke(nameof(LoadNextScene), 1f);
-                }
-                else
-                {
-                    if (feedbackText != null)
-                    {
-                        int remaining = correctCode - PaintingManager.Instance.GetPaintingsFound();
-                        feedbackText.text = "Correct code, but you need to count " + remaining + " more painting(s)!";
-                        feedbackText.color = Color.yellow;
-                    }
-                    
-                    Invoke(nameof(CloseCodePanel), 2f);
-                }
+                feedbackText.text = "Correct! Escaping...";
+                feedbackText.color = Color.green;
             }
-            else
+            
+            if (monsterObject != null)
             {
-                if (feedbackText != null)
-                {
-                    feedbackText.text = "WRONG CODE! Monster alerted!";
-                    feedbackText.color = Color.red;
-                }
-                
-                //AlertMonsterToDoor();
-                Invoke(nameof(CloseCodePanel), 1.5f);
+                monsterObject.SetActive(false);
             }
+            
+            Invoke(nameof(LoadNextScene), 1f);
         }
         else
         {
             if (feedbackText != null)
             {
-                feedbackText.text = "Please enter a valid number";
+                feedbackText.text = "WRONG CODE!";
                 feedbackText.color = Color.red;
             }
         }
     }
-    
-    /*void AlertMonsterToDoor()
-    {
-        MonsterAI monsterAI = FindObjectOfType<MonsterAI>();
-        if (monsterAI != null)
-        {
-            monsterAI.AlertMonster(transform.position);
-        }
-    }*/
     
     void LoadNextScene()
     {
