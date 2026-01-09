@@ -2,17 +2,23 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class GameManager : MonoBehaviour
+public class GunMazeManager : MonoBehaviour
 {
-    public static GameManager Instance;
+    public static GunMazeManager Instance;
     
     [Header("UI References")]
     [SerializeField] private GameObject gameOverPanel;
     [SerializeField] private Button restartButton;
+    [SerializeField] private Button mainMenuButton;
     [SerializeField] private Button quitButton;
+    
+    [Header("Scene Settings")]
+    [SerializeField] private string mainMenuSceneName = "MainMenu";
+    [SerializeField] private string monsterSceneName = "MonsterScene";
     
     [Header("Game State")]
     private bool isGameOver = false;
+    private bool monsterKilled = false;
     
     void Awake()
     {
@@ -39,6 +45,11 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        
+        if (ObjectiveManager.Instance != null)
+        {
+            ObjectiveManager.Instance.SetObjective("Find 3 gun parts");
+        }
     }
     
     void SetupButtons()
@@ -47,6 +58,12 @@ public class GameManager : MonoBehaviour
         {
             restartButton.onClick.RemoveAllListeners();
             restartButton.onClick.AddListener(RestartGame);
+        }
+        
+        if (mainMenuButton != null)
+        {
+            mainMenuButton.onClick.RemoveAllListeners();
+            mainMenuButton.onClick.AddListener(LoadMainMenu);
         }
         
         if (quitButton != null)
@@ -74,11 +91,35 @@ public class GameManager : MonoBehaviour
         Debug.Log("Game Over!");
     }
     
+    public void MonsterKilled()
+    {
+        if (monsterKilled) return;
+        
+        monsterKilled = true;
+        
+        Debug.Log("Monster killed! Loading next scene...");
+        
+        Invoke(nameof(LoadMonsterScene), 2f);
+    }
+    
+    void LoadMonsterScene()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(monsterSceneName);
+    }
+    
     public void RestartGame()
     {
         Debug.Log("Restarting game...");
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+    
+    public void LoadMainMenu()
+    {
+        Debug.Log("Loading main menu...");
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(mainMenuSceneName);
     }
     
     public void QuitGame()
