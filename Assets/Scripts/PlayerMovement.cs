@@ -63,7 +63,7 @@ public class PlayerMovement : MonoBehaviour
         
         currentStamina = maxStamina;
         controller.height = standingHeight;
-        controller.center = new Vector3(0, standingHeight / 2, 0);
+        controller.center = new Vector3(0, standingHeight * 0.5f, 0);
         staminaSlider.maxValue = maxStamina;
         staminaSlider.value = currentStamina;
         
@@ -129,7 +129,9 @@ public class PlayerMovement : MonoBehaviour
         float targetCameraHeight = isCrouching ? crouchCameraHeight : standingCameraHeight;
         
         controller.height = Mathf.Lerp(controller.height, targetHeight, Time.deltaTime * crouchTransitionSpeed);
-        controller.center = new Vector3(0, controller.height / 2, 0);
+        float targetCenter = isCrouching ? crouchHeight * 0.5f : standingHeight * 0.5f;
+        controller.center = new Vector3(0, targetCenter, 0);
+
         
         if (cameraHolder != null)
         {
